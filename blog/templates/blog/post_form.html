@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        Editar Post
+    {% else %}
+        Nuevo Post
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2>
+                {% if form.instance.pk %}
+                    Editar Post
+                {% else %}
+                    Crear Nuevo Post
+                {% endif %}
+            </h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary mt-3">
+                    {% if form.instance.pk %}
+                        Actualizar
+                    {% else %}
+                        Crear
+                    {% endif %}
+                </button>
+                <a href="{% url 'post_list' %}" class="btn btn-secondary mt-3">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
